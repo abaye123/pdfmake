@@ -130,5 +130,13 @@ export function getNodeMargin(node, styleStack) {
 		return null;
 	}
 
+	// In RTL mode the user thinks in visual terms — `margin: [10, 0, 0, 0]`
+	// should put 10pt of space on the visual LEFT, which in an RTL layout is
+	// the END (logical right) of the content. Mirror left/right so the existing
+	// LTR-oriented layout machinery produces the right visual result.
+	if (styleStack && styleStack.getProperty('rtl')) {
+		margin = [margin[2], margin[1], margin[0], margin[3]];
+	}
+
 	return margin;
 }
