@@ -1,14 +1,54 @@
-# pdfmake [![Node.js CI][githubactions_img]][githubactions_url] [![GitHub][github_img]][github_url] [![npm][npm_img]][npm_url]
+# @abaye123/pdfmake [![npm][npm_img]][npm_url]
 
-[githubactions_img]: https://github.com/bpampuch/pdfmake/actions/workflows/node.js.yml/badge.svg?branch=master
-[githubactions_url]: https://github.com/bpampuch/pdfmake/actions
+[npm_img]: https://img.shields.io/npm/v/@abaye123/pdfmake.svg?colorB=0E7FBF
+[npm_url]: https://www.npmjs.com/package/@abaye123/pdfmake
 
-[github_img]: https://img.shields.io/github/release/bpampuch/pdfmake.svg?colorB=0E7FBF
-[github_url]: https://github.com/bpampuch/pdfmake/releases/latest
 
-[npm_img]: https://img.shields.io/npm/v/pdfmake.svg?colorB=0E7FBF
-[npm_url]: https://www.npmjs.com/package/pdfmake
+> **This is a fork of [pdfmake](https://github.com/bpampuch/pdfmake) v0.3.11 that adds bidirectional (RTL) text support.**
+>
+> All credit for pdfmake itself goes to [@bpampuch](https://github.com/bpampuch) and [@liborm85](https://github.com/liborm85).
+> This fork tracks upstream and only adds the bidi layer described below.
+>
+> ```
+> npm install @abaye123/pdfmake
+> ```
+>
+> ```js
+> const pdfmake = require('@abaye123/pdfmake');
+> ```
 
+## RTL / bidirectional text
+
+Implements [UAX #9](https://www.unicode.org/reports/tr9/) visual reordering at the line level, so
+Hebrew content renders in correct visual right-to-left order. Glyph shaping and per-run character
+reversal are left to fontkit (already inside pdfkit); this fork handles what fontkit cannot see
+across: inline ordering, bracket mirroring, RTL-only inlines, and per-script segmentation.
+
+Set `rtl: true` on a text node, table, list, or in `defaultStyle`:
+
+```js
+const docDefinition = {
+  defaultStyle: { font: 'Heebo', rtl: true },
+  content: [
+    'שלום עולם',
+    { text: 'טקסט עם English באמצע ומספר 12345', rtl: true }
+  ]
+};
+```
+
+* When `rtl: true` and no explicit `alignment`, alignment defaults to `'right'`.
+* Mixed Hebrew/Latin paragraphs **without** an explicit `rtl` flag still auto-reorder via bidi.
+* In RTL mode, `margin: [left, top, right, bottom]` mirrors, so `margin[0]` is the visual-right margin.
+* Tables with `rtl: true` reverse column order (colSpan-aware); lists put bullets/numbers on the right.
+* Currency symbols (`₪ € £ ¥ $ ¢`) group with adjacent digits, so `₪3.50` stays one LTR run.
+
+You must supply a font containing Hebrew glyphs — the bundled Roboto has none.
+See [`examples/rtl_hebrew.js`](examples/rtl_hebrew.js) for a complete runnable demo.
+
+**Not supported:** Arabic shaping (contextual/joining forms — needs HarfBuzz), and bidi explicit
+embedding controls (LRE/RLE/PDF/LRI/RLI/FSI/PDI).
+
+---
 
 PDF document generation library for server-side and client-side in pure JavaScript.
 

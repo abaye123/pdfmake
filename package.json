@@ -1,7 +1,7 @@
 {
-  "name": "pdfmake",
+  "name": "@abaye123/pdfmake",
   "version": "0.3.11",
-  "description": "Client/server side PDF printing in pure JavaScript",
+  "description": "Client/server side PDF printing in pure JavaScript, with bidirectional (RTL) text support. Fork of pdfmake 0.3.11.",
   "main": "js/index.js",
   "esnext": "src/index.js",
   "browser": "build/pdfmake.js",
@@ -66,20 +66,31 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bpampuch/pdfmake.git"
+    "url": "git+https://github.com/abaye123/pdfmake.git"
   },
   "keywords": [
     "pdf",
     "javascript",
     "printing",
-    "layout"
+    "layout",
+    "rtl",
+    "bidi",
+    "bidirectional",
+    "hebrew",
+    "unicode"
   ],
   "author": "Bartek Pampuch <bartosz.pampuch@gmail.com>",
+  "contributors": [
+    "abaye <a@abaye.co>"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bpampuch/pdfmake/issues"
+    "url": "https://github.com/abaye123/pdfmake/issues"
   },
-  "homepage": "http://pdfmake.org",
+  "homepage": "https://github.com/abaye123/pdfmake#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "config": {
     "blanket": {
       "pattern": "src",
