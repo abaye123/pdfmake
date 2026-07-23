@@ -1,6 +1,6 @@
 {
   "name": "@abaye123/pdfmake",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "Client/server side PDF printing in pure JavaScript, with bidirectional (RTL) text support. Fork of pdfmake 0.3.11.",
   "main": "js/index.js",
   "esnext": "src/index.js",
